@@ -11,7 +11,7 @@
 						<a class="nav-link" aria-current="page" href="{{ route('public.index') }}">Accueil</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="{{ route('public.offres') }}">Trouver un Job</a>
+						<a class="nav-link" aria-current="page" href="{{ route('public.offres') }}">Trouver un emploi</a>
 					</li>
 				</ul>
 				<a class="btn btn-outline-primary me-2" href="{{ route('login') }}">Se connecter</a>
