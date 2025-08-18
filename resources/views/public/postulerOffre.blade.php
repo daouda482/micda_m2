@@ -51,17 +51,11 @@
                                 <div class="col-md-6 mb-4">
                                     <label for="" class="mb-2">Titre<span class="req">*</span></label>
                                     <input type="text" placeholder="Titre" id="title" name="title"
-                                        class="form-control">
+                                        class="form-control" readonly>
                                 </div>
                                 <div class="col-md-6  mb-4">
-                                    <label for="" class="mb-2">Secteur<span class="req">*</span></label>
-                                    <select name="category" id="category" class="form-control">
-                                        <option value="">Selectionner un secteur</option>
-                                        <option value="">Engineering</option>
-                                        <option value="">Accountant</option>
-                                        <option value="">Information Technology</option>
-                                        <option value="">Fashion designing</option>
-                                    </select>
+                                    <label for="" class="mb-2">Entrepise<span class="req">*</span></label>
+                                    <input type="text" placeholder="entreprise" id="entreprise" name="title" class="form-control" disabled>
                                 </div>
                             </div>
 
