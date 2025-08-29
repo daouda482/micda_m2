@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminOfferController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Candidat\CandidatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PublicController;
@@ -14,8 +16,11 @@ use App\Http\Controllers\Recruteur\OffreController;
 Route::get('/', [PublicController::class, 'index'])->name('public.index');
 Route::get('/offres', [PublicController::class, 'listeOffres'])->name('public.offres');
 Route::get('/details-offres/{offre}', [PublicController::class, 'offreDetails'])->name('public.offreDetails');
-Route::get('/postuler-offre', [PublicController::class, 'postulerOffre'])->name('public.postulerOffre');
-Route::get('/mes-offres', [PublicController::class, 'mesOffres'])->name('public.mesOffres');
+
+Route::get('/offres/{offre}/postuler', [CandidatController::class, 'create'])->name('candidatures.create');
+Route::post('/offres/{offre}/postuler', [CandidatController::class, 'store'])->name('candidatures.store');
+
+Route::get('/mes-offres', [CandidatController::class, 'mesOffres'])->name('public.mesOffres');
 
 Route::get('/entreprises/{entreprise}', [PublicController::class, 'show'])->name('entreprises.show');
 
@@ -31,11 +36,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-// ============== ADMIN ==============================
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-});
 
 // ============== RECRUTEUR ==========================
 Route::prefix('recruteur')->middleware(['auth', 'role:recruteur'])->name('recruteur.')->group(function () {
@@ -68,15 +68,22 @@ Route::middleware(['auth', 'role:candidat'])->group(function () {
 });
 
 
-//=======================Role de l'administrateur========================================
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function() {
+//======================= ADMIN ========================================
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function() {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
-    Route::get('users', [App\Http\Controllers\Admin\AdminUserController::class, 'index'])->name('admin.users.index');
-    Route::get('users/create', [App\Http\Controllers\Admin\AdminUserController::class, 'create'])->name('admin.users.create');
-    Route::post('users', [App\Http\Controllers\Admin\AdminUserController::class, 'store'])->name('admin.users.store');
-    Route::get('users/{user}/edit', [App\Http\Controllers\Admin\AdminUserController::class, 'edit'])->name('admin.users.edit');
-    Route::put('users/{user}', [App\Http\Controllers\Admin\AdminUserController::class, 'update'])->name('admin.users.update');
-    Route::delete('users/{user}', [App\Http\Controllers\Admin\AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+    // Entreprises
+    Route::get('/entreprises', [AdminController::class, 'listeEntreprises'])->name('entreprises.index');
+
+    // Offres
+    Route::resource('offres', AdminOfferController::class);
+
+    Route::get('/utilisateurs', [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('/utilisateurs/create', [AdminUserController::class, 'create'])->name('users.create');
+    Route::post('/utilisateurs', [AdminUserController::class, 'store'])->name('users.store');
+    Route::get('/utilisateurs/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+    Route::put('/utilisateurs/{user}', [AdminUserController::class, 'update'])->name('users.update');
+    Route::delete('/utilisateurs/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
 
 
 

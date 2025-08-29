@@ -61,125 +61,63 @@
                                         <tr>
                                             <th scope="col">Title</th>
                                             <th scope="col">Job Created</th>
-                                            <th scope="col">Applicants</th>
+                                            <th scope="col">Candidatures</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="border-0">
-                                        <tr class="active">
-                                            <td>
-                                                <div class="job-name fw-500">Web Developer</div>
-                                                <div class="info1">Fulltime . Noida</div>
-                                            </td>
-                                            <td>05 Jun, 2023</td>
-                                            <td>130 Applications</td>
-                                            <td>
-                                                <div class="job-status text-capitalize">active</div>
-                                            </td>
-                                            <td>
-                                                <div class="action-dots float-end">
-                                                    <a href="#" class="" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item" href="job-detail.html"> <i
-                                                                    class="fa fa-eye" aria-hidden="true"></i> View</a></li>
-                                                        <li><a class="dropdown-item" href="#"><i class="fa fa-edit"
-                                                                    aria-hidden="true"></i> Edit</a></li>
-                                                        <li><a class="dropdown-item" href="#"><i class="fa fa-trash"
-                                                                    aria-hidden="true"></i> Remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="pending">
-                                            <td>
-                                                <div class="job-name fw-500".html Developer</div>
-                                                    <div class="info1">Part-time . Delhi</div>
-                                            </td>
-                                            <td>13 Aug, 2023</td>
-                                            <td>20 Applications</td>
-                                            <td>
-                                                <div class="job-status text-capitalize">pending</div>
-                                            </td>
-                                            <td>
-                                                <div class="action-dots float-end">
-                                                    <a href="#" class="" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item" href="job-detail.html"> <i
-                                                                    class="fa fa-eye" aria-hidden="true"></i> View</a></li>
-                                                        <li><a class="dropdown-item" href="#"><i class="fa fa-edit"
-                                                                    aria-hidden="true"></i> Edit</a></li>
-                                                        <li><a class="dropdown-item" href="#"><i class="fa fa-trash"
-                                                                    aria-hidden="true"></i> Remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="expired">
-                                            <td>
-                                                <div class="job-name fw-500">Full Stack Developer</div>
-                                                <div class="info1">Fulltime . Noida</div>
-                                            </td>
-                                            <td>27 Sep, 2023</td>
-                                            <td>278 Applications</td>
-                                            <td>
-                                                <div class="job-status text-capitalize">expired</div>
-                                            </td>
-                                            <td>
-                                                <div class="action-dots float-end">
-                                                    <a href="#" class="" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item" href="job-detail.html"> <i
-                                                                    class="fa fa-eye" aria-hidden="true"></i> View</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item" href="#"><i class="fa fa-edit"
-                                                                    aria-hidden="true"></i> Edit</a></li>
-                                                        <li><a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-trash" aria-hidden="true"></i> Remove</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="active">
-                                            <td>
-                                                <div class="job-name fw-500">Developer for IT company</div>
-                                                <div class="info1">Fulltime . Goa</div>
-                                            </td>
-                                            <td>14 Feb, 2023</td>
-                                            <td>70 Applications</td>
-                                            <td>
-                                                <div class="job-status text-capitalize">active</div>
-                                            </td>
-                                            <td>
-                                                <div class="action-dots float-end">
-                                                    <a href="#" class="" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item" href="job-detail.html"> <i
-                                                                    class="fa fa-eye" aria-hidden="true"></i> View</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item" href="#"><i class="fa fa-edit"
-                                                                    aria-hidden="true"></i> Edit</a></li>
-                                                        <li><a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-trash" aria-hidden="true"></i> Remove</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        @forelse ($candidatures as $candidature)
+                                            <tr class="{{ strtolower($candidature->status) }}">
+                                                <td>
+                                                    <div class="job-name fw-500">{{ $candidature->offre->titre }}</div>
+                                                    <div class="info1">{{ $candidature->offre->type_contrat }} ·
+                                                        {{ $candidature->offre->lieu }}</div>
+                                                </td>
+                                                <td>{{ $candidature->created_at->format('d M, Y') }}</td>
+                                                <td>{{ $candidature->offre->candidatures->count() }} Candidatures</td>
+                                                <td>
+                                                    <div class="job-status text-capitalize">{{ $candidature->statut }}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="action-dots float-end">
+                                                        <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                    href="">
+                                                                    <i class="fa fa-eye" aria-hidden="true"></i> Voir
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-edit"></i> Modifier</a>
+                                                            </li>
+                                                            <li>
+                                                                <form
+                                                                    action=""
+                                                                    method="POST">
+                                                                    @csrf @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="dropdown-item text-danger">
+                                                                        <i class="fa fa-trash"></i> Supprimer
+                                                                    </button>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="5" class="text-center text-muted">Vous n’avez pas encore
+                                                    postulé à une offre.</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
+
 
                                 </table>
                             </div>

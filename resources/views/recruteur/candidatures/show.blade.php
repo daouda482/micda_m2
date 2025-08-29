@@ -1,4 +1,4 @@
-@extends('recruteur.layout')
+@extends('layouts.app')
 
 @section('content')
 <div class="card shadow-sm p-4">

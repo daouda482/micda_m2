@@ -2,47 +2,108 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Entreprise;
 use Illuminate\Http\Request;
-use App\Models\Offer;
+use App\Models\Offre;
 
 class AdminOfferController extends Controller {
-    public function index() {
-        $offers = Offer::with('creator')->get();
+    /**
+     * Affiche toutes les offres de l’entreprise du admin connecté
+     */
+    public function index()
+    {
+        $offres = Offre::with('entreprise')->latest()->get();
+
         return view('admin.offres.index', compact('offres'));
     }
 
-    public function create() {
-        return view('admin.offres.create');
+    /**
+     * Formulaire de création d'une nouvelle offre
+     */
+    public function create()
+    {
+        $entreprises = Entreprise::all(); // utile si plusieurs entreprises
+        return view('admin.offres.create', compact('entreprises'));
     }
 
-    public function store(Request $request) {
+    /**
+     * Enregistre une nouvelle offre
+     */
+    public function store(Request $request)
+    {
         $request->validate([
-            'title'=>'required',
-            'description'=>'required',
-            'location'=>'nullable',
-            'status'=>'required|in:active,inactive'
+            'titre' => 'required|string|max:255',
+            'description' => 'required',
+            'lieu' => 'required|string|max:255',
+            'type_contrat' => 'required|string',
+            'date_limite' => 'nullable|date',
+            'entreprise_id' => 'required|exists:entreprises,id',
         ]);
-        Offer::create(array_merge($request->all(), ['created_by'=>auth()->id()]));
-        return redirect()->route('offres.index')->with('success','Offre créée avec succès');
+
+        Offre::create([
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'lieu' => $request->lieu,
+            'type_contrat' => $request->type_contrat,
+            'date_limite' => $request->date_limite,
+            'entreprise_id' => $request->entreprise_id,
+            'created_at' => now(),
+        ]);
+
+        return redirect()->route('admin.offres.index')
+                         ->with('success', 'Offre créée avec succès');
     }
 
-    public function edit(Offer $offer) {
-        return view('admin.offres.edit', compact('offre'));
+    /**
+     * Formulaire d'édition d'une offre
+     */
+    public function edit($id)
+    {
+        $offre = Offre::findOrFail($id);
+        $entreprises = Entreprise::all();
+
+        return view('admin.offres.edit', compact('offre', 'entreprises'));
     }
 
-    public function update(Request $request, Offer $offer) {
+    /**
+     * Met à jour une offre
+     */
+    public function update(Request $request, $id)
+    {
         $request->validate([
-            'title'=>'required',
-            'description'=>'required',
-            'location'=>'nullable',
-            'status'=>'required|in:active,inactive'
+            'titre' => 'required|string|max:255',
+            'description' => 'required',
+            'lieu' => 'required|string|max:255',
+            'type_contrat' => 'required|string',
+            'date_limite' => 'nullable|date',
+            'entreprise_id' => 'required|exists:entreprises,id',
         ]);
-        $offer->update($request->all());
-        return redirect()->route('offres.index')->with('success','Offre mise à jour avec succès');
+
+        $offre = Offre::findOrFail($id);
+        $offre->update($request->all());
+
+        return redirect()->route('admin.offres.index')
+                         ->with('success', 'Offre mise à jour avec succès');
     }
 
-    public function destroy(Offer $offer) {
-        $offer->delete();
-        return redirect()->route('offres.index')->with('success','Offre supprimée');
+    /**
+     * Affiche les détails d'une offre
+     */
+    public function show($id)
+    {
+        $offre = Offre::with('entreprise')->findOrFail($id);
+        return view('admin.offres.show', compact('offre'));
+    }
+
+    /**
+     * Supprime une offre
+     */
+    public function destroy($id)
+    {
+        $offre = Offre::findOrFail($id);
+        $offre->delete();
+
+        return redirect()->route('admin.offres.index')
+                         ->with('success', 'Offre supprimée avec succès');
     }
 }

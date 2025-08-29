@@ -1,4 +1,4 @@
-@extends('recruteur.layout')
+@extends('layouts.app')
 
 @section('content')
 
@@ -44,7 +44,7 @@
                         <td><span class="badge bg-danger">{{ $offre->date_limite->format('d/m/Y') }}</span></td>
                         <td>
                             <span class="badge bg-info">
-                                {{ $offre->candidatures_count ?? 0 }}
+                                {{ $offre->candidatures->count() ?? 0 }}
                             </span>
                         </td>
                         <td>

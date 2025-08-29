@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Détail de l\'Offre')
 
 @section('content')
 <h2 class="mb-4"><i class="fas fa-eye"></i> Détail de l'Offre</h2>
@@ -39,11 +40,11 @@
         <p class="form-control-plaintext">{{ $offre->description }}</p>
     </div>
 
-    <a href="{{ route('recruteur.offres.edit', $offre->id) }}" class="btn btn-warning">
+    <a href="{{ route('admin.offres.edit', $offre->id) }}" class="btn btn-warning">
         <i class="fas fa-edit"></i> Modifier
     </a>
     &nbsp;
-    <a href="{{ route('recruteur.offres.index') }}" class="btn btn-secondary">
+    <a href="{{ route('admin.offres.index') }}" class="btn btn-secondary">
         <i class="fas fa-arrow-left"></i> Retour
     </a>
 </div>

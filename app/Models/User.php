@@ -52,4 +52,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function candidatures()
+    {
+        return $this->hasMany(\App\Models\Candidature::class, 'candidat_id');
+    }
+
+    public function entreprises()
+    {
+        return $this->hasMany(\App\Models\Entreprise::class);
+    }
 }

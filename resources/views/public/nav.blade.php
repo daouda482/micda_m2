@@ -14,10 +14,42 @@
 						<a class="nav-link" aria-current="page" href="{{ route('public.offres') }}">Trouver un emploi</a>
 					</li>
 				</ul>
-				<a class="btn btn-outline-primary me-2" href="{{ route('login') }}">Se connecter</a>
-				<a class="btn btn-primary me-2" href="{{ route('register') }}">S'inscrire</a>
+
+				@guest
+					<a class="btn btn-outline-primary me-2" href="{{ route('login') }}">Se connecter</a>
+					<a class="btn btn-primary me-2" href="{{ route('register') }}">S'inscrire</a>
+				@endguest
+
+				@auth
+					<div class="d-flex align-items-center">
+						<span class="me-3 fw-bold"><i class="fa fa-user"></i> {{ Auth::user()->prenom }} {{ Auth::user()->name }}</span>
+
+                        <!-- Condition selon le rôle -->
+                        @if(Auth::user()->role === 'candidat')
+                            <a class="btn btn-outline-primary me-2" href="{{ route('public.mesOffres') }}">Mes offres</a>
+                        @elseif(Auth::user()->role === 'recruteur')
+                            <a class="btn btn-outline-primary me-2" href="{{ route('recruteur.dashboard') }}">Dashboard Recruteur</a>
+                        @elseif(Auth::user()->role === 'admin')
+                            <a class="btn btn-outline-primary me-2" href="{{ route('admin.dashboard') }}">Dashboard Admin</a>
+                        @endif
+
+						<!-- Formulaire de déconnexion -->
+						<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
+							@csrf
+							<button type="button" class="btn btn-danger" onclick="confirmLogout()">Se déconnecter</button>
+						</form>
+					</div>
+				@endauth
 
 			</div>
 		</div>
 	</nav>
 </header>
+
+<script>
+	function confirmLogout() {
+		if (confirm("Voulez-vous vraiment vous déconnecter ?")) {
+			document.getElementById('logout-form').submit();
+		}
+	}
+</script>

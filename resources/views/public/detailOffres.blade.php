@@ -55,7 +55,7 @@
                         </div>
                         <div class="border-bottom"></div>
                         <div class="pt-3 text-end">
-                            <a href="{{ route('public.postulerOffre', $offre->id) }}" class="btn btn-primary">Postuler</a>
+                            <a href="{{ route('candidatures.create', $offre->id) }}" class="btn btn-primary">Postuler</a>
                             <a href="{{ route('public.offres') }}" class="btn btn-danger">Annuler</a>
                         </div>
                     </div>

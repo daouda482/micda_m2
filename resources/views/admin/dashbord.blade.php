@@ -1,120 +1,88 @@
 @extends('layouts.app')
 
-@section('title', 'Tableau de bord - Administrateur')
+@section('title', 'Dashboard Recruteur')
 
 @section('content')
-<div class="container-fluid">
+    <h2 class="mb-4"><i class="fas fa-home"></i> Tableau de Bord Admin</h2>
+
+    <!-- Statistiques -->
     <div class="row">
-        <!-- Sidebar -->
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
-            <div class="position-sticky pt-3">
-                <h5 class="text-white text-center">Admin Panel</h5>
-                <ul class="nav flex-column mt-4">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
-                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{route('admin.users.index')}}">
-                            <i class="fas fa-users me-2"></i> Utilisateurs
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="">
-                            <i class="fas fa-user-tie me-2"></i> Recruteurs
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
-                            <i class="fas fa-user-graduate me-2"></i> Candidats
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
-                            <i class="fas fa-briefcase me-2"></i> Offres d'emploi
-                        </a>
-                    </li>
-                </ul>
+        <div class="col-md-4 mb-3">
+            <div class="card p-3 shadow-sm bg-primary text-white">
+                <h5><i class="fas fa-list"></i> Offres Publiées</h5>
+                <h3>{{ $offresCount }}</h3>
             </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
-            <h2 class="mb-4">Bienvenue, Administrateur</h2>
-
-            <!-- Cards -->
-            <div class="row g-4 mb-4">
-                <div class="col-md-3">
-                    <div class="card text-bg-primary h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-users"></i> Utilisateurs</h5>
-                            <p class="card-text fs-4">{{ $stats['users'] ?? 0 }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-bg-success h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-user-tie"></i> Recruteurs</h5>
-                            <p class="card-text fs-4">{{ $stats['recruiters'] ?? 0 }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-bg-warning h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-user-graduate"></i> Candidats</h5>
-                            <p class="card-text fs-4">{{ $stats['candidates'] ?? 0 }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-bg-danger h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-briefcase"></i> Offres</h5>
-                            <p class="card-text fs-4">{{ $stats['offers'] ?? 0 }}</p>
-                        </div>
-                    </div>
-                </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card p-3 shadow-sm bg-success text-white">
+                <h5><i class="fas fa-users"></i> Candidatures</h5>
+                <h3>{{ $candidaturesCount }}</h3>
             </div>
-
-            <!-- Chart -->
-            <div class="card shadow-sm">
-                <div class="card-header bg-white">
-                    <h5 class="mb-0"><i class="fas fa-chart-line"></i> Statistiques des candidatures</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="applicationsChart" height="100"></canvas>
-                </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card p-3 shadow-sm bg-warning text-white">
+                <h5><i class="fas fa-user-check"></i> Entretiens</h5>
+                <h3>{{ $entretiensCount }}</h3>
             </div>
-        </main>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card p-3 shadow-sm bg-info text-white">
+                <h5><i class="fas fa-users"></i> Utilisateurs</h5>
+                <h3>{{ $usersCount }}</h3>
+            </div>
+        </div>
+
     </div>
-</div>
+
+      <!-- Tableau des offres -->
+    <div class="card p-3 shadow-sm">
+        <h5><i class="fas fa-list"></i> Mes Offres Publiées</h5>
+        <table class="table table-bordered table-hover mt-3">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Date</th>
+                    <th>Candidatures</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Développeur Laravel</td>
+                    <td>15/08/2025</td>
+                    <td>10</td>
+                    <td><span class="badge bg-success">Ouvert</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Graphique -->
+    <div class="card p-3 shadow-sm mb-4">
+        <h5><i class="fas fa-chart-line"></i> Statistiques des Offres</h5>
+        <canvas id="statsChart"></canvas>
+    </div>
+
+    <script>
+        // Graphique Chart.js
+        const ctx = document.getElementById('statsChart');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+                datasets: [{
+                    label: 'Candidatures',
+                    data: [12, 19, 3, 5, 8, 15],
+                    backgroundColor: '#0d6efd'
+                }]
+            }
+        });
+    </script>
 @endsection
-
-@push('styles')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-@endpush
-
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const ctx = document.getElementById('applicationsChart');
-    const chartData = {!! json_encode($chartData ?? [5,8,6,10,12,9,14]) !!};
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: chartData.map((_, i) => 'Jour ' + (i + 1)),
-            datasets: [{
-                label: 'Candidatures',
-                data: chartData,
-                borderColor: '#007bff',
-                backgroundColor: 'rgba(0,123,255,0.1)',
-                tension: 0.3
-            }]
-        }
-    });
-</script>
-@endpush

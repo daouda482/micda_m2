@@ -31,13 +31,12 @@ class PublicController extends Controller
                 ->orWhere('description', 'like', '%' . $request->keyword . '%');
         }
 
-        // Filtre adresse via la relation entreprise
+        // Filtre par lieu
         if ($request->filled('adresse')) {
-            $query->whereHas('entreprise', function ($q) use ($request) {
-                $q->where('adresse', 'like', "%{$request->adresse}%");
-            });
+           $query->whereIn('lieu', $request->lieu);
         }
 
+        // Filtrer par type de contract
         if ($request->filled('type_contrat')) {
             $query->whereIn('type_contrat', $request->type_contrat);
         }
@@ -109,13 +108,4 @@ class PublicController extends Controller
         return view('public.detailOffres', compact('offre'));
     }
 
-    public function postulerOffre()
-    {
-        return view('public.postulerOffre');
-    }
-
-    public function mesOffres()
-    {
-        return view('public.mesOffres');
-    }
 }

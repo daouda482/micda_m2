@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
     return match ($user->role) {
         'admin'     => redirect()->route('admin.dashboard'),
         'recruteur' => redirect()->route('recruteur.dashboard'),
-        default     => redirect()->route('candidat.dashboard'),
+        default     => redirect()->route('public.offres'),
     };
     }
 

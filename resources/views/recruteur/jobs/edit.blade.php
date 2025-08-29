@@ -1,4 +1,4 @@
-@extends('recruteur.layout')
+@extends('layouts.app')
 
 @section('content')
 <h2 class="mb-4"><i class="fas fa-edit"></i> Modifier une Offre</h2>

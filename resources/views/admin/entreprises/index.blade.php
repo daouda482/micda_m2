@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($entreprises as $entreprise)
+                @forelse($entreprises as $entreprise)
                     <tr>
                         <th><img src="" alt=""></th>
                         <td>{{ $entreprise->nom }}</td>
@@ -36,9 +36,18 @@
 
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">Aucune entreprise disponible pour le moment.</td>
+                    </tr>
+                @endforelse
+
             </tbody>
         </table>
+        <ul class="d-flex justify-content-end align-items-center">
+            {{ $entreprises->links() }}
+        </ul>
     </div>
+
 </div>
 @endsection

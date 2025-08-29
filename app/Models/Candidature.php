@@ -15,7 +15,7 @@ class Candidature extends Model
         'lettre_motivation',
     ];
 
-    
+
     public function offre()
     {
         return $this->belongsTo(Offre::class);
@@ -25,4 +25,6 @@ class Candidature extends Model
     {
         return $this->belongsTo(User::class, 'candidat_id');
     }
+
+    
 }

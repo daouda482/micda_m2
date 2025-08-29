@@ -93,7 +93,7 @@
                                             <p class="text-muted">{{ $offre->entreprise->nom }}</p>
                                             <div class="bg-light p-3 border">
                                                 <p class="mb-0"><i class="fa fa-map-marker"></i>
-                                                    {{ $offre->entreprise->adresse }}</p>
+                                                    {{ $offre->lieu }}</p>
                                                 <p class="mb-0"><i class="fa fa-clock-o"></i> {{ $offre->type_contrat }}
                                                 </p>
                                                 <p class="mb-0">Expire: <span

@@ -74,7 +74,7 @@
                                             <p class="text-muted">{{ $offre->entreprise->nom }}</p>
                                             <div class="bg-light p-3 border rounded flex-grow-1">
                                                 <p class="mb-2"><i class="fa fa-map-marker"></i>
-                                                    {{ $offre->entreprise->adresse }}</p>
+                                                    {{ $offre->lieu }}</p>
                                                 <p class="mb-2"><i class="fa fa-clock-o"></i> {{ $offre->type_contrat }}
                                                 </p>
                                                 <p class="mb-0">

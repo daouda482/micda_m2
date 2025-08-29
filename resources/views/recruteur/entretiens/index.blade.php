@@ -1,4 +1,4 @@
-@extends('recruteur.layout')
+@extends('layouts.app')
 
 @section('content')
     {{-- Message de succès --}}

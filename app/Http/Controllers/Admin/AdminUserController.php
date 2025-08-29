@@ -11,7 +11,7 @@ class AdminUserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::latest()->paginate(6);
         return view('admin.users.index', compact('users'));
     }
 
@@ -30,7 +30,6 @@ class AdminUserController extends Controller
             'adresse' => 'string|max:255|nullable',
             'phone' => 'string|max:30|nullable',
             'photo' => 'image|nullable',
-            'password' => 'required|string|min:6|confirmed',
         ]);
 
         User::create([
@@ -43,7 +42,7 @@ class AdminUserController extends Controller
             'photo' => $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null,
             'account_status' => 'active',
             'email_verified_at' => now(),
-            'password' => Hash::make($request->password),
+            'password' => Hash::make('password'),
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'Utilisateur créé avec succès');
@@ -74,7 +73,7 @@ class AdminUserController extends Controller
             'adresse' => $request->adresse,
             'phone' => $request->phone,
             'photo' => $request->file('photo') ? $request->file('photo')->store('photos', 'public') : $user->photo,
-            'account_status' => $user->account_status, // Keep the existing status
+            'account_status' => $user->account_status,
             'email_verified_at' => $user->email_verified_at ?: now(),
         ]);
 

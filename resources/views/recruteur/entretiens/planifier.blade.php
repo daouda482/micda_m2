@@ -1,4 +1,4 @@
-@extends('recruteur.layout')
+@extends('layouts.app')
 
 @section('content')
 <div class="card shadow-sm p-3 mb-4">
@@ -27,7 +27,7 @@
             <textarea class="form-control" name="message" rows="3" placeholder="Ex: Merci de vous présenter 10 minutes avant l'entretien."></textarea>
         </div>
         <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Enregistrer</button>
-        
+
     </form>
 </div>
 @endsection
