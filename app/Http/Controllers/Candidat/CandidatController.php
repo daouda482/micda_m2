@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 
 class CandidatController extends Controller
 {
+   
+
     public function create(Offre $offre)
     {
         // 1) Interdire de postuler à sa propre offre (si l'utilisateur possède l'entreprise de l'offre)
@@ -46,6 +48,7 @@ class CandidatController extends Controller
         }
 
         // Validation
+
         $validated = $request->validate([
             'message'            => ['required','string','min:10'],
             'experience'         => ['nullable','string'],

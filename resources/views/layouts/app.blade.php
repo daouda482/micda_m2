@@ -30,7 +30,7 @@
             font-weight: bold;
         }
 
-        
+
 
         .header .user-info {
             display: flex;
@@ -103,7 +103,7 @@
         <div class="user-info">
             <span><i class="fas fa-user-circle"></i> {{ Auth::user()->role ?? 'Utilisateur' }}</span>
             <a href="{{ route('logout') }}" class="btn btn-danger btn-sm"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                onclick="return confirm('Êtes-vous sûr de vouloir déconnecter ?')">
                 <i class="fas fa-sign-out-alt"></i> Déconnexion
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -140,9 +140,10 @@
                 class="{{ request()->routeIs('recruteur.entretiens.*') ? 'active' : '' }}">
                 <i class="fas fa-calendar"></i> Entretiens
             </a>
-            <a href="#">
+            <a href="{{ route('profile.edit') }}">
                 <i class="fas fa-user-circle"></i> Profil
             </a>
+
         @elseif(Auth::user() && Auth::user()->role === 'admin')
             <a href="{{ route('admin.dashboard') }}"
                 class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -160,15 +161,13 @@
                 class="{{ request()->routeIs('admin.offres.index') ? 'active' : '' }}">
                 <i class="fas fa-list"></i> Offres d'emploi
             </a>
-            <a href=""
-                class="">
-                <i class="fas fa-file-alt"></i> Candidatures
+            <a href="{{ route('admin.candidatures.index') }}"
+                class="{{ request()->routeIs('admin.candidatures.*') ? 'active' : '' }}">
+                <i class="fas fa-users"></i> Candidatures
             </a>
-            <a href=""
-                class="">
-                <i class="fas fa-cogs"></i> Paramètres
-            </a>
-            <a href="#">
+
+            <a href="{{ route('profile.edit') }}"
+                class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}">
                 <i class="fas fa-user-circle"></i> Profil
             </a>
         @endif

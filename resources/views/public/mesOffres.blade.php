@@ -19,8 +19,8 @@
                         <div class="s-body text-center mt-3">
                             <img src="assets/images/avatar7.png" alt="avatar" class="rounded-circle img-fluid"
                                 style="width: 150px;">
-                            <h5 class="mt-3 pb-0">Daouda BA</h5>
-                            <p class="text-muted mb-1 fs-6">Full Stack Developer</p>
+                            <h5 class="mt-3 pb-0">{{ Auth::user()->prenom }} {{ Auth::user()->name }}</h5>
+                            <p class="text-muted mb-1 fs-6">{{ Auth::user()->email }}</p>
                             <div class="d-flex justify-content-center mb-2">
                                 <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"
                                     class="btn btn-primary">Modfier photo</button>

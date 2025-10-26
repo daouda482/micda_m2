@@ -3,10 +3,16 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="fas fa-list"></i> Mes Entreprises</h2>
-    <a href="{{ route('recruteur.offres.create') }}" class="btn btn-primary">
+    <a href="{{ route('admin.entreprises.create') }}" class="btn btn-primary">
         <i class="fas fa-plus-circle"></i> Nouvelle Entreprise
     </a>
 </div>
+@if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
 <div class="card shadow-sm p-3">
     <div class="table-responsive">
@@ -30,9 +36,15 @@
                         <td>{{ $entreprise->adresse }}</td>
                         <td>{{ $entreprise->site_web }}</td>
                         <td>
-                            <a href="" class="btn btn-primary btn-sm">Voir</a>
-                            <a href="" class="btn btn-secondary btn-sm">Modifier</a>
-                            <a href="" class="btn btn-danger btn-sm">Supprimer</a>
+                            <a href="{{ route('admin.entreprises.show', $entreprise->id) }}" class="btn btn-primary btn-sm">Voir</a>
+                            <a href="{{ route('admin.entreprises.edit', $entreprise->id) }}" class="btn btn-secondary btn-sm">Modifier</a>
+                            <form action="{{ route('admin.entreprises.destroy', $entreprise->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer cette entreprise ?')" title="Supprimer">
+                                    Supprimer
+                                </button>
+                            </form>
 
                         </td>
                     </tr>

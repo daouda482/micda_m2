@@ -22,12 +22,6 @@ class AdminController extends Controller
         return view('admin.dashbord', compact('offresCount', 'candidaturesCount', 'entretiensCount', 'usersCount'));
     }
 
-    public function listeEntreprises()
-    {
-        // Récupérer les entreprises associées à l'utilisateur connecté
-        $entreprises = Entreprise::latest()->paginate(2);
-
-        return view('admin.entreprises.index', compact('entreprises'));
-    }
+   
 
 }

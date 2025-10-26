@@ -1,16 +1,20 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCandidatureController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminEntretienController;
 use App\Http\Controllers\Admin\AdminOfferController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\EntrepriseController;
 use App\Http\Controllers\Candidat\CandidatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PublicController;
+use App\Http\Controllers\Recruteur\CandidatureController;
 use App\Http\Controllers\Recruteur\RecruteurController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Recruteur\CandidatureController;
 use App\Http\Controllers\Recruteur\EntretienController;
 use App\Http\Controllers\Recruteur\OffreController;
+use App\Http\Controllers\Recruteur\RecruteurEntrepriseController;
 
 // ================ PUBLIC ==========================
 Route::get('/', [PublicController::class, 'index'])->name('public.index');
@@ -23,11 +27,6 @@ Route::post('/offres/{offre}/postuler', [CandidatController::class, 'store'])->n
 Route::get('/mes-offres', [CandidatController::class, 'mesOffres'])->name('public.mesOffres');
 
 Route::get('/entreprises/{entreprise}', [PublicController::class, 'show'])->name('entreprises.show');
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -43,9 +42,10 @@ Route::prefix('recruteur')->middleware(['auth', 'role:recruteur'])->name('recrut
     // Dashboard
     Route::get('/dashboard', [RecruteurController::class, 'index'])->name('dashboard');
     // Entreprises
-    Route::get('/entreprises', [RecruteurController::class, 'listeEntreprises'])->name('entreprises.index');
+    Route::resource('entreprises', RecruteurEntrepriseController::class);
 
     // Offres
+
     Route::resource('offres', OffreController::class);
 
     // Candidatures
@@ -64,7 +64,7 @@ Route::prefix('recruteur')->middleware(['auth', 'role:recruteur'])->name('recrut
 
 // ============== CANDIDAT ===========================
 Route::middleware(['auth', 'role:candidat'])->group(function () {
-    Route::get('/candidat/dashboard', [CandidatController::class, 'index'])->name('candidat.dashboard');
+    Route::get('/candidat/dashboard', [CandidatController::class, 'mesOffres'])->name('public.mesOffres');
 });
 
 
@@ -73,7 +73,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
     // Entreprises
-    Route::get('/entreprises', [AdminController::class, 'listeEntreprises'])->name('entreprises.index');
+    Route::resource('entreprises', EntrepriseController::class);
 
     // Offres
     Route::resource('offres', AdminOfferController::class);
@@ -85,7 +85,18 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::put('/utilisateurs/{user}', [AdminUserController::class, 'update'])->name('users.update');
     Route::delete('/utilisateurs/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
 
+    // Candidatures
+    Route::get('/candidatures', [AdminCandidatureController::class, 'index'])->name('candidatures.index');
+    Route::post('/candidatures/{id}/accept', [AdminCandidatureController::class, 'accept'])->name('candidatures.accept');
+    Route::post('/candidatures/{id}/reject', [AdminCandidatureController::class, 'reject'])->name('candidatures.reject');
+    Route::get('/candidatures/{id}', [AdminCandidatureController::class, 'show'])->name('candidatures.show');
+    Route::post('/candidatures/{id}/entretien', [AdminCandidatureController::class, 'planifierEntretien'])->name('candidatures.entretien');
 
+    // Entretiens
+    Route::get('/entretiens', [AdminEntretienController::class, 'index'])->name('entretiens.index');
+    Route::get('/entretiens/planifier/{candidature}', [AdminEntretienController::class, 'create'])->name('entretiens.planifier');
+
+    Route::post('/entretiens/planifier/{candidature}', [AdminEntretienController::class, 'store'])->name('entretiens.store');
 
 });
 

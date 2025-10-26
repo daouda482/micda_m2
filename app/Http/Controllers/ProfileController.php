@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -26,15 +27,35 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Mise à jour des champs simples
+        $user->name    = $request->input('name');
+        $user->prenom  = $request->input('prenom');
+        $user->email   = $request->input('email');
+        $user->adresse = $request->input('adresse');
+        $user->phone   = $request->input('phone');
+
+        // Si l'email change → réinitialiser la vérification
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        // Gestion de l'upload de la photo
+        if ($request->hasFile('photo')) {
+            // Supprimer l'ancienne photo si elle existe
+            if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+                Storage::disk('public')->delete($user->photo);
+            }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+            // Enregistrer la nouvelle photo
+            $path = $request->file('photo')->store('photos', 'public');
+            $user->photo = $path;
+        }
+
+        $user->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profil mis à jour');
     }
 
     /**
@@ -49,6 +70,11 @@ class ProfileController extends Controller
         $user = $request->user();
 
         Auth::logout();
+
+        // Supprimer la photo du storage si elle existe
+        if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+            Storage::disk('public')->delete($user->photo);
+        }
 
         $user->delete();
 
