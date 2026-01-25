@@ -9,7 +9,7 @@
         <input type="hidden" name="candidature_id" value="{{ $candidature->id }}">
         <div class="col-md-6">
              <label class="form-label">Candidat</label>
-             <select class="form-select" name="candidat_id" required>
+            <select class="form-select" name="candidat_id" required>
                 <option value="">-- Sélectionnez un candidat --</option>
                 <option value="3" selected>Mansour DIOP</option>
                 <option value="4">Sira DIALLO</option>
