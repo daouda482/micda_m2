@@ -20,8 +20,8 @@ class EntretienController extends Controller
     public function create(Candidature $candidature)
     {
         return view('recruteur.entretiens.planifier', compact('candidature'));
-    }
 
+    }
     public function store(Request $request)
     {
         $request->validate([
