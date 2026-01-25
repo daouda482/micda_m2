@@ -8,7 +8,7 @@
         <input type="hidden" name="candidat_id" value="{{ $candidature->candidat->id }}">
         <input type="hidden" name="candidature_id" value="{{ $candidature->id }}">
         <div class="col-md-6">
-             {{-- <label class="form-label">Candidat</label> --}}
+             <label class="form-label">Candidat</label>
             <select class="form-select" name="candidat_id" required>
                 <option value="3" selected>Mansour DIOP</option>
                 <option value="4">Sira DIALLO</option>
@@ -22,7 +22,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label">Candidat</label>
+                {{-- <label class="form-label">Candidat</label> --}}
                 <input type="text" class="form-control" value="{{ $candidature->candidat->prenom }} {{ $candidature->candidat->name }}" disabled>
             </div>
             <div class="col-md-6">
