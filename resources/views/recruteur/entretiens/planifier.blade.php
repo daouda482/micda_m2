@@ -7,7 +7,21 @@
         @csrf
         <input type="hidden" name="candidat_id" value="{{ $candidature->candidat->id }}">
         <input type="hidden" name="candidature_id" value="{{ $candidature->id }}">
-        <div class="col-md-6"> <label class="form-label">Candidat</label> <select class="form-select" name="candidat_id" required> <option value="">-- Sélectionnez un candidat --</option> <option value="3" selected>Candidat Test</option> <option value="4">Jean Dupont</option> <option value="5">Awa Ndiaye</option> <option value="6">Moussa Fall</option> <!-- Tu peux générer cette liste dynamiquement depuis ta base --> </select> </div>
+        <div class="col-md-6">
+             <label class="form-label">Candidat</label>
+
+             <select class="form-select" name="candidat_id" required>
+                <option value="">-- Sélectionnez un candidat --</option>
+                <option value="3" selected>Mansour DIOP</option>
+                <option value="4">Sira DIALLO</option>
+                <option value="5">Aliou Ndiaye</option>
+                <option value="6">Fatou DIOUF</option>
+                <option value="7">Moussa Fall</option>
+                <option value="8">Abdou KA</option>
+                <option value="9">Awa SARR</option>
+                <option value="10">Ousmane BA</option>
+            </select>
+        </div>
         <div class="row mb-3">
             <div class="col-md-6">
                 <label class="form-label">Candidat</label>
