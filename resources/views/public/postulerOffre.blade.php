@@ -77,7 +77,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-6 mb-4">
                                 <label class="mb-2">Type de contrat <span class="req">*</span></label>
                                 <input type="text" class="form-control" value="{{ $offre->type_contrat }}" readonly>
@@ -86,7 +86,7 @@
                                 <label class="mb-2">Lieu <span class="req">*</span></label>
                                 <input type="text" class="form-control" value="{{ $offre->lieu }}" readonly>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <hr class="my-4">
 
