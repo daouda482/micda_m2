@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo "📦 Installation des dépendances Laravel"
                 dir('backend') {
-                    sh 'composer install --no-interaction --prefer-dist'
+                    bat 'composer install --no-interaction --prefer-dist'
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo "🧪 Lancement des tests Laravel"
                 dir('backend') {
-                    sh 'php artisan test || true'
+                    bat 'php artisan test || true'
                 }
             }
         }
@@ -46,15 +46,15 @@ pipeline {
         stage('Docker - Build Images') {
             steps {
                 echo "🐳 Construction des images Docker"
-                sh 'docker build -t $DOCKER_BACKEND_IMAGE -f Dockerfile.backend .'
-                sh 'docker build -t $DOCKER_FRONTEND_IMAGE -f Dockerfile.frontend .'
+                bat 'docker build -t $DOCKER_BACKEND_IMAGE -f Dockerfile.backend .'
+                bat 'docker build -t $DOCKER_FRONTEND_IMAGE -f Dockerfile.frontend .'
             }
         }
 
         stage('Docker - Run Containers') {
             steps {
                 echo "🚀 Lancement des conteneurs"
-                sh '''
+                bat '''
                 docker stop backend || true
                 docker stop frontend || true
                 docker rm backend || true
