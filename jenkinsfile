@@ -38,7 +38,7 @@ pipeline {
             steps {
                 echo "🎨 Build du frontend"
                 dir('frontend') {
-                    sh 'echo "Frontend statique prêt"'
+                    bat 'echo "Frontend statique prêt"'
                 }
             }
         }
