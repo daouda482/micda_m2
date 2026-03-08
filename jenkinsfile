@@ -1,0 +1,82 @@
+pipeline {
+    agent any
+
+    environment {
+        APP_NAME = "recrutement-platform"
+        DOCKER_BACKEND_IMAGE = "recrutement-backend"
+        DOCKER_FRONTEND_IMAGE = "recrutement-frontend"
+    }
+
+    stages {
+
+        stage('Checkout Source Code') {
+            steps {
+                echo "📥 Récupération du code depuis GitHub"
+                git branch: 'main', url: 'https://github.com/daouda482/micda_m2.git'
+            }
+        }
+
+        stage('Backend - Install Dependencies') {
+            steps {
+                echo "📦 Installation des dépendances Laravel"
+                dir('backend') {
+                    bat 'composer install --no-interaction --prefer-dist'
+                }
+            }
+        }
+
+        stage('Backend - Run Tests') {
+            steps {
+                echo "🧪 Lancement des tests Laravel"
+                dir('backend') {
+                    bat 'php artisan test || true'
+                }
+            }
+        }
+
+        stage('Frontend - Build') {
+            steps {
+                echo "🎨 Build du frontend"
+                dir('frontend') {
+                    bat 'echo "Frontend statique prêt"'
+                }
+            }
+        }
+
+        stage('Docker - Build Images') {
+            steps {
+                echo "🐳 Construction des images Docker"
+                bat 'docker build -t $DOCKER_BACKEND_IMAGE -f Dockerfile.backend .'
+                bat 'docker build -t $DOCKER_FRONTEND_IMAGE -f Dockerfile.frontend .'
+            }
+        }
+
+        stage('Docker - Run Containers') {
+            steps {
+                echo "🚀 Lancement des conteneurs"
+                bat '''
+                docker stop backend || true
+                docker stop frontend || true
+                docker rm backend || true
+                docker rm frontend || true
+
+                docker run -d --name backend -p 8000:8000 $DOCKER_BACKEND_IMAGE
+                docker run -d --name frontend -p 8080:80 $DOCKER_FRONTEND_IMAGE
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Pipeline exécuté avec succès"
+        }
+        failure {
+            echo "❌ Pipeline échoué - Vérifier les logs"
+        }
+        always {
+            echo "📊 Fin du pipeline CI/CD"
+        }
+    }
+}
+

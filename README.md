@@ -55,6 +55,35 @@ In order to ensure that the Laravel community is welcoming to all, please review
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Conception d’une plateforme numérique de recrutement et de gestion des candidatures
+
+## 🎯 Objectif du projet
+L’objectif de ce projet est de développer une **plateforme numérique moderne** permettant de **faciliter et automatiser le processus de recrutement**.  
+Elle offre un espace centralisé où les recruteurs peuvent gérer les offres d’emploi, suivre les candidatures et communiquer efficacement avec les candidats, tandis que ces derniers peuvent postuler et suivre l’évolution de leurs dossiers.
+
+## 🔍 Fonctionnalités principales
+- Création et gestion des **offres d’emploi**  
+- Soumission et suivi des **candidatures**  
+- Tableau de bord interactif pour les **recruteurs et candidats**  
+- Filtrage et **classement automatique** des candidatures  
+- Authentification sécurisée avec rôles : Admin, Recruteur, Candidat  
+- Interface **responsive** adaptée aux mobiles et ordinateurs  
+
+## 🛠️ Technologies utilisées
+- **Backend :** Laravel API REST  
+- **Frontend :** React, HTML, Bootstrap  
+- **Base de données :** MySQL  
+- **Stockage/Hosting éventuel :** Supabase, AWS  
+
+## 🚀 Objectifs techniques
+- Concevoir une **architecture robuste et sécurisée**  
+- Automatiser le **tri et le suivi des candidatures**  
+- Offrir une **interface intuitive** pour tous les utilisateurs  
+- Assurer la **scalabilité et la performance** de la plateforme  
+
+## 📂 Structure du projet
+
 
 ## License
 
